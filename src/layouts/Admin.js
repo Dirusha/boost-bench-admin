@@ -22,7 +22,7 @@ export default function Admin() {
   return (
     <>
       <Sidebar />
-      <div className="relative md:ml-64 bg-blueGray-100">
+      <div className="relative md:ml-64">
         {location.pathname === "/admin/dashboard" && (
           <>
             <AdminNavbar />
@@ -52,7 +52,7 @@ export default function Admin() {
             <Route path="/admin/tables" exact component={Tables} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
-          <FooterAdmin />
+          {/* <FooterAdmin /> */}
         </div>
       </div>
     </>
