@@ -287,7 +287,7 @@ export default function RoleManagement() {
             right: 0,
             bottom: 0,
             zIndex: 9999,
-            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
           }}
         >
           <div
