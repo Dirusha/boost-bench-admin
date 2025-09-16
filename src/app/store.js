@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import roleReducer from "./features/user/roleSlice";
+import userReducer from "./features/user/userSlice";
 
 const persistedState = localStorage.getItem("authState")
   ? JSON.parse(localStorage.getItem("authState"))
@@ -15,6 +16,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     roles: roleReducer,
+    user: userReducer,
   },
   preloadedState: {
     auth: persistedState,
