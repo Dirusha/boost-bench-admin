@@ -2,6 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import roleReducer from "./features/user/roleSlice";
 import userReducer from "./features/user/userSlice";
+import productReducer from "./features/products/productSlice";
+import categoryReducer from "./features/categories/categorySlice";
+import tagReducer from "./features/tags/tagSlice";
 
 const persistedState = localStorage.getItem("authState")
   ? JSON.parse(localStorage.getItem("authState"))
@@ -17,6 +20,9 @@ export const store = configureStore({
     auth: authReducer,
     roles: roleReducer,
     user: userReducer,
+    products: productReducer,
+    categories: categoryReducer,
+    tags: tagReducer,
   },
   preloadedState: {
     auth: persistedState,
