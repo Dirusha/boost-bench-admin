@@ -15,6 +15,8 @@ import Tables from "views/admin/Tables.js";
 import ProductManagement from "views/admin/ProductManagement";
 import UserManagement from "views/admin/UserManagement";
 import RoleManagement from "views/admin/RoleManagement";
+import CategoryManagement from "views/admin/CategoryManagement";
+import TagManagement from "views/admin/TagManagement";
 
 export default function Admin() {
   const location = useLocation(); // Hook to get the current route
@@ -31,6 +33,16 @@ export default function Admin() {
         )}
         <div className="px-4 py-10 mx-auto w-full">
           <Switch>
+          <Route
+              path="/admin/categorymanagement"
+              exact
+              component={CategoryManagement}
+            />
+            <Route
+              path="/admin/tagmanagement"
+              exact
+              component={TagManagement}
+            />
             <Route
               path="/admin/productmanagement"
               exact

@@ -1,9 +1,9 @@
 /*eslint-disable*/
 import React from "react";
 import { Link } from "react-router-dom";
-
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
+import Restricted from "components/Restricted";
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -84,142 +84,253 @@ export default function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/dashboard") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/dashboard"
-                >
-                  <i
+              <Restricted
+                permissions={["USER_READ", "USER_CREATE", "USER_UPDATE"]}
+              >
+                <li className="items-center">
+                  <Link
                     className={
-                      "fas fa-tv mr-2 text-sm " +
+                      "text-xs uppercase py-3 font-bold block " +
                       (window.location.href.indexOf("/admin/dashboard") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
                     }
-                  ></i>{" "}
-                  Dashboard
-                </Link>
-              </li>
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/rolemanagement") !==
-                    -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/rolemanagement"
-                >
-                  <i
+                    to="/admin/dashboard"
+                  >
+                    <i
+                      className={
+                        "fas fa-tv mr-2 text-sm " +
+                        (window.location.href.indexOf("/admin/dashboard") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Dashboard
+                  </Link>
+                </li>
+              </Restricted>
+
+              <Restricted permissions={["ROLE_MANAGE", "PERMISSION_MANAGE"]}>
+                <li className="items-center">
+                  <Link
                     className={
-                      "fas fa-tv mr-2 text-sm " +
+                      "text-xs uppercase py-3 font-bold block " +
                       (window.location.href.indexOf("/admin/rolemanagement") !==
                       -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
                     }
-                  ></i>{" "}
-                  Role Management
-                </Link>
-              </li>
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/usermanagement") !==
-                    -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/usermanagement"
-                >
-                  <i
+                    to="/admin/rolemanagement"
+                  >
+                    <i
+                      className={
+                        "fas fa-tv mr-2 text-sm " +
+                        (window.location.href.indexOf(
+                          "/admin/rolemanagement"
+                        ) !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Role Management
+                  </Link>
+                </li>
+              </Restricted>
+
+              <Restricted
+                permissions={[
+                  "USER_READ",
+                  "USER_CREATE",
+                  "USER_UPDATE",
+                  "USER_DELETE",
+                ]}
+              >
+                <li className="items-center">
+                  <Link
                     className={
-                      "fas fa-tv mr-2 text-sm " +
+                      "text-xs uppercase py-3 font-bold block " +
                       (window.location.href.indexOf("/admin/usermanagement") !==
                       -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
                     }
-                  ></i>{" "}
-                  User Management
-                </Link>
-              </li>
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf(
-                      "/admin/productmanagement"
-                    ) !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/productmanagement"
-                >
-                  <i
+                    to="/admin/usermanagement"
+                  >
+                    <i
+                      className={
+                        "fas fa-tv mr-2 text-sm " +
+                        (window.location.href.indexOf(
+                          "/admin/usermanagement"
+                        ) !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    User Management
+                  </Link>
+                </li>
+              </Restricted>
+
+              <Restricted
+                permissions={[
+                  "CATEGORY_READ",
+                  "CATEGORY_CREATE",
+                  "CATEGORY_UPDATE",
+                  "CATEGORY_DELETE",
+                ]}
+              >
+                <li className="items-center">
+                  <Link
                     className={
-                      "fas fa-box-open mr-2 text-sm " +
+                      "text-xs uppercase py-3 font-bold block " +
+                      (window.location.href.indexOf(
+                        "/admin/categorymanagement"
+                      ) !== -1
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                    to="/admin/categorymanagement"
+                  >
+                    <i
+                      className={
+                        "fas fa-box-open mr-2 text-sm " +
+                        (window.location.href.indexOf(
+                          "/admin/categorymanagement"
+                        ) !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Category Management
+                  </Link>
+                </li>
+              </Restricted>
+
+              <Restricted
+                permissions={[
+                  "TAG_READ",
+                  "TAG_CREATE",
+                  "TAG_UPDATE",
+                  "TAG_DELETE",
+                ]}
+              >
+                <li className="items-center">
+                  <Link
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (window.location.href.indexOf("/admin/tagmanagement") !==
+                      -1
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                    to="/admin/tagmanagement"
+                  >
+                    <i
+                      className={
+                        "fas fa-box-open mr-2 text-sm " +
+                        (window.location.href.indexOf(
+                          "/admin/tagmanagement"
+                        ) !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Tag Management
+                  </Link>
+                </li>
+              </Restricted>
+
+              <Restricted
+                permissions={[
+                  "PRODUCT_READ",
+                  "PRODUCT_CREATE",
+                  "PRODUCT_UPDATE",
+                  "PRODUCT_DELETE",
+                ]}
+              >
+                <li className="items-center">
+                  <Link
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
                       (window.location.href.indexOf(
                         "/admin/productmanagement"
                       ) !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
                     }
-                  ></i>{" "}
-                  Product Management
-                </Link>
-              </li>
+                    to="/admin/productmanagement"
+                  >
+                    <i
+                      className={
+                        "fas fa-box-open mr-2 text-sm " +
+                        (window.location.href.indexOf(
+                          "/admin/productmanagement"
+                        ) !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Product Management
+                  </Link>
+                </li>
+              </Restricted>
 
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/settings") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/settings"
-                >
-                  <i
+              <Restricted permissions={["PERMISSION_MANAGE"]}>
+                <li className="items-center">
+                  <Link
                     className={
-                      "fas fa-tools mr-2 text-sm " +
+                      "text-xs uppercase py-3 font-bold block " +
                       (window.location.href.indexOf("/admin/settings") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
                     }
-                  ></i>{" "}
-                  Settings
-                </Link>
-              </li>
+                    to="/admin/settings"
+                  >
+                    <i
+                      className={
+                        "fas fa-tools mr-2 text-sm " +
+                        (window.location.href.indexOf("/admin/settings") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Settings
+                  </Link>
+                </li>
+              </Restricted>
 
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/tables") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/tables"
-                >
-                  <i
+              <Restricted
+                permissions={[
+                  "ORDER_READ",
+                  "ORDER_READ_ALL",
+                  "ORDER_READ_OWN",
+                  "ORDER_CREATE",
+                  "ORDER_STATUS_UPDATE",
+                  "ORDER_PAY",
+                ]}
+              >
+                <li className="items-center">
+                  <Link
                     className={
-                      "fas fa-table mr-2 text-sm " +
+                      "text-xs uppercase py-3 font-bold block " +
                       (window.location.href.indexOf("/admin/tables") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
                     }
-                  ></i>{" "}
-                  Tables
-                </Link>
-              </li>
+                    to="/admin/tables"
+                  >
+                    <i
+                      className={
+                        "fas fa-table mr-2 text-sm " +
+                        (window.location.href.indexOf("/admin/tables") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Tables
+                  </Link>
+                </li>
+              </Restricted>
             </ul>
 
             {/* Divider */}

@@ -7,6 +7,7 @@ import {
   deleteRole,
   getPermissions,
 } from "../../app/features/user/roleSlice"; // Adjust the import path as needed
+import Restricted from "components/Restricted";
 
 export default function RoleManagement() {
   const dispatch = useDispatch();
@@ -107,14 +108,16 @@ export default function RoleManagement() {
                 edit, and delete roles to control user access.
               </p>
             </div>
-            <button
-              className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
-              type="button"
-              onClick={() => openModal()}
-              disabled={loadingStates.roleCreate || loadingStates.roleUpdate}
-            >
-              Add New Role
-            </button>
+            <Restricted permission={"ROLE_MANAGE"}>
+              <button
+                className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => openModal()}
+                disabled={loadingStates.roleCreate || loadingStates.roleUpdate}
+              >
+                Add New Role
+              </button>
+            </Restricted>
           </div>
         </div>
 
@@ -135,144 +138,153 @@ export default function RoleManagement() {
           )}
 
           {/* Search Bar */}
-          <div className="relative w-full mb-6">
-            <input
-              type="text"
-              placeholder="Search roles by name..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full pr-10 ease-linear transition-all duration-150"
-            />
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-              <svg
-                className="h-5 w-5 text-blueGray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+          <Restricted permission={"ROLE_MANAGE"}>
+            <div className="relative w-full mb-6">
+              <input
+                type="text"
+                placeholder="Search roles by name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full pr-10 ease-linear transition-all duration-150"
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <svg
+                  className="h-5 w-5 text-blueGray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  style={{ marginTop: "-35px", marginRight: "5px" }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
             </div>
-          </div>
+          </Restricted>
 
           {/* Roles Table */}
-          <div className="block w-full overflow-x-auto">
-            <table className="items-center w-full bg-transparent border-collapse">
-              <thead>
-                <tr>
-                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                    Role Name
-                  </th>
-                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                    Permissions
-                  </th>
-                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {!loadingStates.roles && filteredRoles.length > 0 ? (
-                  filteredRoles.map((role, index) => (
-                    <tr
-                      key={role.id}
-                      className={
-                        index % 2 === 0 ? "bg-white" : "bg-blueGray-50"
-                      }
-                    >
-                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <div className="flex items-center">
-                          <div className="w-12 h-12 bg-lightBlue-500 rounded-full flex items-center justify-center mr-4">
-                            <span className="text-white font-semibold text-sm">
-                              {role.name.charAt(0)}
-                            </span>
+          <Restricted permission={"ROLE_MANAGE"}>
+            <div className="block w-full overflow-x-auto">
+              <table className="items-center w-full bg-transparent border-collapse">
+                <thead>
+                  <tr>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Role Name
+                    </th>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Permissions
+                    </th>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {!loadingStates.roles && filteredRoles.length > 0 ? (
+                    filteredRoles.map((role, index) => (
+                      <tr
+                        key={role.id}
+                        className={
+                          index % 2 === 0 ? "bg-white" : "bg-blueGray-50"
+                        }
+                      >
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                          <div className="flex items-center">
+                            <div className="w-12 h-12 bg-lightBlue-500 rounded-full flex items-center justify-center mr-4">
+                              <span className="text-white font-semibold text-sm">
+                                {role.name.charAt(0)}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="font-bold text-blueGray-600 text-sm">
+                                {role.name}
+                              </span>
+                              <br />
+                              <span className="text-xs text-blueGray-500">
+                                System Role
+                              </span>
+                            </div>
                           </div>
-                          <div>
-                            <span className="font-bold text-blueGray-600 text-sm">
-                              {role.name}
+                        </th>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          <div className="flex items-center">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-lightBlue-100 text-lightBlue-800">
+                              {role.permissions.length} assigned
                             </span>
-                            <br />
-                            <span className="text-xs text-blueGray-500">
-                              System Role
-                            </span>
+                            <div className="ml-2 flex flex-wrap gap-1">
+                              {role.permissions.slice(0, 2).map((perm) => (
+                                <span
+                                  key={perm.id}
+                                  className="inline-block px-2 py-1 text-xs bg-blueGray-200 text-blueGray-700 rounded"
+                                >
+                                  {perm.name}
+                                </span>
+                              ))}
+                              {role.permissions.length > 2 && (
+                                <span className="inline-block px-2 py-1 text-xs bg-blueGray-300 text-blueGray-600 rounded">
+                                  +{role.permissions.length - 2} more
+                                </span>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </th>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex items-center">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-lightBlue-100 text-lightBlue-800">
-                            {role.permissions.length} assigned
-                          </span>
-                          <div className="ml-2 flex flex-wrap gap-1">
-                            {role.permissions.slice(0, 2).map((perm) => (
-                              <span
-                                key={perm.id}
-                                className="inline-block px-2 py-1 text-xs bg-blueGray-200 text-blueGray-700 rounded"
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                          <div className="flex justify-end space-x-3">
+                            <Restricted permission={"ROLE_MANAGE"}>
+                              <button
+                                className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-3 py-1 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150 mr-2"
+                                onClick={() => openModal(role)}
+                                disabled={loadingStates.roleUpdate}
                               >
-                                {perm.name}
-                              </span>
-                            ))}
-                            {role.permissions.length > 2 && (
-                              <span className="inline-block px-2 py-1 text-xs bg-blueGray-300 text-blueGray-600 rounded">
-                                +{role.permissions.length - 2} more
-                              </span>
-                            )}
+                                Edit
+                              </button>
+                            </Restricted>
+                            <Restricted permission={"ROLE_MANAGE"}>
+                              <button
+                                className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-3 py-1 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150 "
+                                onClick={() => handleDelete(role.id)}
+                                disabled={loadingStates.roleDelete}
+                              >
+                                Delete
+                              </button>
+                            </Restricted>
                           </div>
-                        </div>
-                      </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <div className="flex justify-end space-x-3">
-                          <button
-                            className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-3 py-1 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
-                            onClick={() => openModal(role)}
-                            disabled={loadingStates.roleUpdate}
+                        </td>
+                      </tr>
+                    ))
+                  ) : !loadingStates.roles ? (
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="text-center py-8 text-blueGray-500"
+                      >
+                        <div className="flex flex-col items-center">
+                          <svg
+                            className="w-12 h-12 text-blueGray-300 mb-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                           >
-                            Edit
-                          </button>
-                          <button
-                            className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-3 py-1 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
-                            onClick={() => handleDelete(role.id)}
-                            disabled={loadingStates.roleDelete}
-                          >
-                            Delete
-                          </button>
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1}
+                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            />
+                          </svg>
+                          No roles found. Create your first role to get started.
                         </div>
                       </td>
                     </tr>
-                  ))
-                ) : !loadingStates.roles ? (
-                  <tr>
-                    <td
-                      colSpan={3}
-                      className="text-center py-8 text-blueGray-500"
-                    >
-                      <div className="flex flex-col items-center">
-                        <svg
-                          className="w-12 h-12 text-blueGray-300 mb-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1}
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                          />
-                        </svg>
-                        No roles found. Create your first role to get started.
-                      </div>
-                    </td>
-                  </tr>
-                ) : null}
-              </tbody>
-            </table>
-          </div>
+                  ) : null}
+                </tbody>
+              </table>
+            </div>
+          </Restricted>
         </div>
       </div>
 
@@ -373,11 +385,11 @@ export default function RoleManagement() {
                   )}
                 </div>
 
-                <div className="flex justify-end space-x-3 pt-4 mt-4 border-t border-blueGray-200 flex-shrink-0">
+                <div className="flex justify-end space-x-3 pt-4 mt-4 border-blueGray-200 flex-shrink-0">
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="bg-blueGray-500 text-white active:bg-blueGray-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
+                    className="bg-blueGray-500 text-black active:bg-blueGray-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
                     disabled={
                       loadingStates.roleCreate || loadingStates.roleUpdate
                     }

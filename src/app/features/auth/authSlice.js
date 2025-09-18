@@ -4,7 +4,7 @@ const initialState = {
   token: null,
   id: null,
   username: null,
-  roles: [],
+  permissions: [],
 };
 
 const authSlice = createSlice({
@@ -15,13 +15,13 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.id = action.payload.id;
       state.username = action.payload.username;
-      state.roles = action.payload.roles;
+      state.permissions = action.payload.permissions;
     },
     clearAuth: (state) => {
       state.token = null;
       state.id = null;
       state.username = null;
-      state.roles = [];
+      state.permissions = [];
       localStorage.removeItem("authState"); // Clear localStorage on logout
     },
   },
