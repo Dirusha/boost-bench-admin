@@ -9,14 +9,13 @@ import FooterAdmin from "components/Footers/FooterAdmin.js";
 
 // views
 import Dashboard from "views/admin/Dashboard.js";
-import Maps from "views/admin/Maps.js";
 import Settings from "views/admin/Settings.js";
-import Tables from "views/admin/Tables.js";
 import ProductManagement from "views/admin/ProductManagement";
 import UserManagement from "views/admin/UserManagement";
 import RoleManagement from "views/admin/RoleManagement";
 import CategoryManagement from "views/admin/CategoryManagement";
 import TagManagement from "views/admin/TagManagement";
+import OrderManagement from "views/admin/OrderManagement";
 
 export default function Admin() {
   const location = useLocation(); // Hook to get the current route
@@ -33,7 +32,7 @@ export default function Admin() {
         )}
         <div className="px-4 py-10 mx-auto w-full">
           <Switch>
-          <Route
+            <Route
               path="/admin/categorymanagement"
               exact
               component={CategoryManagement}
@@ -59,9 +58,12 @@ export default function Admin() {
               exact
               component={UserManagement}
             />
-            <Route path="/admin/maps" exact component={Maps} />
+            <Route
+              path="/admin/ordermanagement"
+              exact
+              component={OrderManagement}
+            />
             <Route path="/admin/settings" exact component={Settings} />
-            <Route path="/admin/tables" exact component={Tables} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
           {/* <FooterAdmin /> */}
