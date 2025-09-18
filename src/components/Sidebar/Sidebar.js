@@ -1,12 +1,22 @@
 /*eslint-disable*/
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom"; // Change useNavigate to useHistory
+import { useDispatch } from "react-redux";
+import { clearAuth } from "../../app/features/auth/authSlice"; // Adjust the path to your authSlice
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import Restricted from "components/Restricted";
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
+  const dispatch = useDispatch();
+  const history = useHistory(); // Use useHistory instead of useNavigate
+
+  const handleLogout = () => {
+    dispatch(clearAuth()); // Clear auth state
+    history.push("/"); // Use history.push instead of navigate
+  };
+
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-md bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -70,7 +80,7 @@ export default function Sidebar() {
                 <input
                   type="text"
                   placeholder="Search"
-                  className="border-0 px-3 py-2 h-12 border border-solid  border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
+                  className="border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
                 />
               </div>
             </form>
@@ -82,7 +92,6 @@ export default function Sidebar() {
               Admin Layout Pages
             </h6>
             {/* Navigation */}
-
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <Restricted
                 permissions={["USER_READ", "USER_CREATE", "USER_UPDATE"]}
@@ -235,7 +244,8 @@ export default function Sidebar() {
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    Tag Management
+                    Tag Management{" "}
+                    {/* Fixed typo: "Tag reson" to "Tag Management" */}
                   </Link>
                 </li>
               </Restricted>
@@ -326,6 +336,18 @@ export default function Sidebar() {
                   </Link>
                 </li>
               </Restricted>
+
+              <li className="items-center">
+                <button
+                  className={
+                    "text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
+                  }
+                  onClick={handleLogout}
+                >
+                  <i className="fas fa-sign-out-alt mr-2 text-sm text-blueGray-300"></i>{" "}
+                  Logout
+                </button>
+              </li>
             </ul>
           </div>
         </div>

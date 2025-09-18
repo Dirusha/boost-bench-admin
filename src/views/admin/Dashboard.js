@@ -6,6 +6,7 @@ import CardLineChart from "components/Cards/CardLineChart.js";
 import CardBarChart from "components/Cards/CardBarChart.js";
 import CardPageVisits from "components/Cards/CardPageVisits.js";
 import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
+import CardTable from "components/Cards/CardTable";
 
 export default function Dashboard() {
   return (
@@ -23,7 +24,7 @@ export default function Dashboard() {
           <CardPageVisits />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardSocialTraffic />
+          <CardTable />
         </div>
       </div>
     </>
