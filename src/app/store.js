@@ -5,6 +5,7 @@ import userReducer from "./features/user/userSlice";
 import productReducer from "./features/products/productSlice";
 import categoryReducer from "./features/categories/categorySlice";
 import tagReducer from "./features/tags/tagSlice";
+import orderReducer from "./features/orders/orderSlice";
 
 const persistedState = localStorage.getItem("authState")
   ? JSON.parse(localStorage.getItem("authState"))
@@ -23,6 +24,7 @@ export const store = configureStore({
     products: productReducer,
     categories: categoryReducer,
     tags: tagReducer,
+    orders: orderReducer,
   },
   preloadedState: {
     auth: persistedState,
